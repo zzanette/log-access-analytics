@@ -1,0 +1,49 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": ""
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-east-1",
+    "source_ami": "ami-0b6a9c5cdbe183541",
+    "instance_type": "t2.micro",
+    "ssh_username": "ec2-user",
+    "ami_name": "packer-mvn-java {{timestamp}}",
+    "vpc_id": "vpc-0e1edc309a40aca6a",
+    "subnet_id": "subnet-0d71e719128c799db"
+  }],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "target/log-access-analytics.jar",
+      "destination": "/tmp/"
+    },
+    {
+      "type": "file",
+      "source": "deploy/log-access-analytics.service",
+      "destination": "/tmp/"
+    },
+    {
+      "type": "file",
+      "source": "deploy/start.sh",
+      "destination": "/tmp/"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo mkdir /app",
+        "sudo mv /tmp/log-access-analytics.jar /app/",
+        "sudo mv /tmp/start.sh /app/",
+        "sudo mv /tmp/log-access-analytics.service /app/",
+        "sudo chmod -R +x /app",
+        "sudo mv /app/log-access-analytics.service /etc/systemd/system/log-access-analytics.service",
+        "sudo systemctl daemon-reload",
+        "sudo systemctl enable log-access-analytics",
+        "sudo systemctl start log-access-analytics"
+      ]
+    }
+  ]
+}

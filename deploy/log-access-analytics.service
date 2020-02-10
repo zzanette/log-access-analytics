@@ -1,0 +1,17 @@
+[Unit]
+Description=A Java REST Service for Log Access Analytics
+
+[Service]
+User=ec2-user
+WorkingDirectory=/app/
+
+#path to executable.
+#executable is a bash script which calls jar file
+ExecStart=/app/start.sh
+SuccessExitStatus=143
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

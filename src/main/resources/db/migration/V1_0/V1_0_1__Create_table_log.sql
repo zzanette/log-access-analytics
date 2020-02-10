@@ -1,0 +1,9 @@
+CREATE TABLE log (
+  id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  url VARCHAR(255) NOT NULL,
+  date_time DATETIME NOT NULL,
+  user_uuid VARCHAR(100) NOT NULL,
+  region_code int(3)
+);
+
+
