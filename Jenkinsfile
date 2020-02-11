@@ -38,6 +38,7 @@ pipeline {
                       sshUserPrivateKey(credentialsId: 'ec2-user-private-key', keyFileVariable: 'EC2_PRIVATE_KEY', passphraseVariable: '', usernameVariable: '')
                 ]) {
                     sh '''
+                        rm -rf terraform-log-access-analytics
                         git clone https://github.com/zzanette/terraform-log-access-analytics.git
                         cd terraform-log-access-analytics
                         aws s3 cp s3://service-logger/ami-id/amivar.tf ./
