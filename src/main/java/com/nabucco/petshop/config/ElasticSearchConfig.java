@@ -7,7 +7,7 @@ public class ElasticSearchConfig {
 
   private RestHighLevelClient client;
 
-  public ElasticSearchConfig(RestHighLevelClient client) {
+  ElasticSearchConfig(RestHighLevelClient client) {
     this.client = client;
   }
 

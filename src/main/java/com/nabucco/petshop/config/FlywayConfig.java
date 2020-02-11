@@ -6,7 +6,7 @@ public class FlywayConfig {
 
   private Flyway flyway;
 
-  public FlywayConfig(Flyway flyway) {
+  FlywayConfig(Flyway flyway) {
     this.flyway = flyway;
   }
 

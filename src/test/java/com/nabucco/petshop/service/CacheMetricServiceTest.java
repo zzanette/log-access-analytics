@@ -2,7 +2,7 @@ package com.nabucco.petshop.service;
 
 import static org.mockito.ArgumentMatchers.anyString;
 
-import com.nabucco.petshop.config.RedisConnection;
+import com.nabucco.petshop.config.RedisConfig;
 import com.nabucco.petshop.dto.MetricDTO;
 import com.nabucco.petshop.serialization.SerializationStringObject;
 import java.io.IOException;
@@ -19,13 +19,13 @@ import redis.clients.jedis.Jedis;
 
 public class CacheMetricServiceTest {
 
-  private RedisConnection redisConnection;
+  private RedisConfig redisConfig;
   private CacheMetricService service;
 
   @Before
   public void settUp() {
-    this.redisConnection = Mockito.mock(RedisConnection.class);
-    this.service = new CacheMetricService(redisConnection);
+    this.redisConfig = Mockito.mock(RedisConfig.class);
+    this.service = new CacheMetricService(redisConfig);
   }
 
   @Test
@@ -46,7 +46,7 @@ public class CacheMetricServiceTest {
     String metricString = SerializationStringObject.toString(metricDTO);
     Set<String> metricsCached = new HashSet<>();
     metricsCached.add(metricString);
-    Mockito.when(redisConnection.getConnection()).thenReturn(jedis);
+    Mockito.when(redisConfig.getConnection()).thenReturn(jedis);
     Mockito.when(jedis.smembers(anyString())).thenReturn(new HashSet<>(metricsCached));
 
     MetricDTO metricReturned = service.getCacheMetricByURL("/pets/cat/2").stream().findFirst().get();
@@ -56,7 +56,7 @@ public class CacheMetricServiceTest {
 
   @Test
   public void shouldRetornEmptyListWhenGetCacheThrowAnExpcetion() {
-    Mockito.when(redisConnection.getConnection()).thenThrow(new RuntimeException("Error"));
+    Mockito.when(redisConfig.getConnection()).thenThrow(new RuntimeException("Error"));
     Assert.assertTrue(service.getCacheMetricByURL("/pets/rat/33").isEmpty());
   }
 
@@ -65,7 +65,7 @@ public class CacheMetricServiceTest {
     Jedis jedis = Mockito.mock(Jedis.class);
     MetricDTO metricDTO = new MetricDTO("/pets/cat/2", 22L);
     List<MetricDTO> list = Arrays.asList(metricDTO);
-    Mockito.when(redisConnection.getConnection()).thenReturn(jedis);
+    Mockito.when(redisConfig.getConnection()).thenReturn(jedis);
 
     MetricDTO metric = service.setChacheMetricByURL("/pets/cat/2", list).stream().findFirst().get();
     Assert.assertEquals(metricDTO.getUrl(), metric.getUrl());
@@ -77,7 +77,7 @@ public class CacheMetricServiceTest {
     Jedis jedis = Mockito.mock(Jedis.class);
     MetricDTO metricDTO = new MetricDTO("/pets/cat/2", 22L);
     List<MetricDTO> list = Arrays.asList(metricDTO);
-    Mockito.when(redisConnection.getConnection()).thenReturn(jedis);
+    Mockito.when(redisConfig.getConnection()).thenReturn(jedis);
     Mockito.when(jedis.sadd(anyString())).thenThrow(new RuntimeException("Error"));
 
     MetricDTO metric = service.setChacheMetricByURL("/pets/cat/2", list).stream().findFirst().get();
