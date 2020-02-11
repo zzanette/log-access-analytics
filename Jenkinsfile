@@ -26,12 +26,8 @@ pipeline {
                     echo '' > amivar.tf.template
                     echo 'variable "APP_INSTANCE_AMI" { default = "${AMI_GENERATED}" }' >> amivar.tf.template
                     export AMI_GENERATED="$ami" && envsubst < amivar.tf.template > amivar.tf
-                    git clone https://github.com/zzanette/terraform-log-access-analytics.git
-                    mv amivar.tf terraform-log-access-analytics/amivar.tf
-                    cd terraform-log-access-analytics
-                    git add .
-                    git commit -m"Jenkins pipeline - Changed amivar"
-                    git push origin master
+                    cat amivar.tf
+                    aws s3 cp amivar.tf s3://service-logger/ami-id/
                    '''
              }
         }
@@ -42,9 +38,7 @@ pipeline {
                       sshUserPrivateKey(credentialsId: 'ec2-user-private-key', keyFileVariable: 'EC2_PRIVATE_KEY', passphraseVariable: '', usernameVariable: '')
                 ]) {
                     sh '''
-                        rm -rf  terraform-log-access-analytics
-                        git clone https://github.com/zzanette/terraform-log-access-analytics.git
-                        cd terraform-log-access-analytics
+                        aws s3 cp s3://service-logger/ami-id/amivar.tf ./
                         cat amivar.tf
                         wget -c https://releases.hashicorp.com/terraform/0.12.20/terraform_0.12.20_linux_amd64.zip
                         unzip -o terraform_0.12.20_linux_amd64.zip
