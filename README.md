@@ -56,13 +56,12 @@ To provision a machine with the log analytics application, we have 3 jobs thats 
 | log-analytics-pipeline | To do the proccess more directly, we have a pipeline to do all the work. This pipeline uses the Jenkinsfile on project, that's build the project, build AMI and launch the instance on AWS EC2.|
 
 
-### URLs with the Services
-### API Endpoints
-|   Server      | URL|
-| ------------- | --------------------------                                 |
-| Log Access Analytics API | ec2-54-164-225-234.compute-1.amazonaws.com:8080 |
-| Jenkins                  | ec2-54-173-12-240.compute-1.amazonaws.com:8080  |
-| Kibana                   | ec2-54-173-72-3.compute-1.amazonaws.com:5601    |
+### Running Services
+|   Server      | URL                                                            |
+| ------------- | ---------------------------------------------------------------|
+| Log Access Analytics API | [ec2-54-164-225-234.compute-1.amazonaws.com:8080]() |
+| Jenkins                  | [ec2-54-173-12-240.compute-1.amazonaws.com:8080]()  |
+| Kibana                   | [ec2-54-173-72-3.compute-1.amazonaws.com:5601]()    |
 
 ### Todos
  - Write MORE Tests and Integration Test;
