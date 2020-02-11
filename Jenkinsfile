@@ -46,11 +46,11 @@ pipeline {
                         wget -c https://releases.hashicorp.com/terraform/0.12.20/terraform_0.12.20_linux_amd64.zip
                         unzip -o terraform_0.12.20_linux_amd64.zip
                         ./terraform init
+                        ./terraform state rm aws_eip.app-ip
                         ./terraform import aws_eip.app-ip eipalloc-017f99bacfc6cc3c6
                         ./terraform apply -auto-approve -var PATH_TO_PUBLIC_KEY=${EC2_PUBLIC_KEY} -var PATH_TO_PRIVATE_KEY=${EC2_PRIVATE_KEY}
                      '''
-                  }
-
+                }
             }
         }
     }
