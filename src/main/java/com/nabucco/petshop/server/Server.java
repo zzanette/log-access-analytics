@@ -37,13 +37,14 @@ public class Server {
 
   public void awaitShutdown() {
     if (isStarted) {
-      config.getRedisConnection().close();
       server.awaitShutdown();
     }
   }
 
   public void shutdown() {
     if (isStarted) {
+      config.getRedisConfig().close();
+      config.getElasticSearchConfig().close();
       server.shutdown();
     }
   }

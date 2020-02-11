@@ -2,11 +2,11 @@ package com.nabucco.petshop.config;
 
 import redis.clients.jedis.Jedis;
 
-public class RedisConnection {
+public class RedisConfig {
 
   private Jedis jedis;
 
-  protected RedisConnection(Jedis jedis) {
+  RedisConfig(Jedis jedis) {
     this.jedis = jedis;
   }
 

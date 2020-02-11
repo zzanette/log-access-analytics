@@ -44,7 +44,7 @@ public class Configuration extends Environment {
   private int executorThreadPoolSize;
 
   private EntityManager entityManager;
-  private RedisConnection redisConnection;
+  private RedisConfig redisConfig;
   private ElasticSearchConfig elasticSearchConfig;
   private FlywayConfig flywayConfig;
   private LogRepository logRepository;
@@ -64,7 +64,7 @@ public class Configuration extends Environment {
     this.executorThreadPoolSize = Integer
         .parseInt(p.getProperty(EXECUTOR_THREAD_POOL_SIZE, DEFAULT_EXECUTOR_THREAD_POOL_SIZE));
     this.entityManager = configureEntityManager(p);
-    this.redisConnection = configureRedis(p);
+    this.redisConfig = configureRedis(p);
     this.flywayConfig = configureFlyway(p);
     this.elasticSearchConfig = configureElasticSearch(p);
     initialize();
@@ -90,8 +90,12 @@ public class Configuration extends Environment {
     return homeController;
   }
 
-  public RedisConnection getRedisConnection() {
-    return redisConnection;
+  public RedisConfig getRedisConfig() {
+    return redisConfig;
+  }
+
+  public ElasticSearchConfig getElasticSearchConfig() {
+    return elasticSearchConfig;
   }
 
   private void initialize() {
@@ -100,7 +104,7 @@ public class Configuration extends Environment {
 
     //Initialize Services
     this.logService = new LogService(logRepository);
-    this.cacheMetricService = new CacheMetricService(redisConnection);
+    this.cacheMetricService = new CacheMetricService(redisConfig);
     this.elasticSearchService = new ElasticSearchService(elasticSearchConfig);
 
     //Initialize Cntrollers
@@ -122,12 +126,12 @@ public class Configuration extends Environment {
         .createEntityManager();
   }
 
-  private RedisConnection configureRedis(Properties p) {
+  private RedisConfig configureRedis(Properties p) {
     Jedis jedis = new Jedis(p.getProperty(REDIS_CONNECTION_URL),
         Integer.valueOf(p.getProperty(REDIS_CONNECTION_PORT)),
         Integer.valueOf(p.getProperty(REDIS_CONNECTION_TIMEOUT)));
 
-    return new RedisConnection(jedis);
+    return new RedisConfig(jedis);
   }
 
   private FlywayConfig configureFlyway(Properties p) {
