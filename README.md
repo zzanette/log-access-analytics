@@ -68,4 +68,5 @@ To provision a machine with the log analytics application, we have 3 jobs thats 
  - Run application over Kubernets;
  - Add Swagger;
  - Add Basic Authentication or OpenID Authentication;
- - Add authentication on kibana.
+ - Add authentication on kibana;
+ - Add dependency injection.
