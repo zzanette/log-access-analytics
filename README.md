@@ -57,11 +57,11 @@ To provision a machine with the log analytics application, we have 3 jobs thats 
 
 
 ### Running Services
-|                             Server                                                  |  Access URL                                    |                               
-| ------------------------------------------------------------------------------------|------------------------------------------------|
-| [Log Access Analytics API](http://ec2-54-164-225-234.compute-1.amazonaws.com:8080) | ec2-54-164-225-234.compute-1.amazonaws.com:8080 |
-| [Jenkins Service](http://ec2-54-173-12-240.compute-1.amazonaws.com:8080)           | ec2-54-173-12-240.compute-1.amazonaws.com:8080  |
-| [Kibana Service](http://ec2-54-173-72-3.compute-1.amazonaws.com:5601)              | ec2-54-173-72-3.compute-1.amazonaws.com:5601    |
+|                             Server                                                  |  Access URL                                    | Status |                               
+| ------------------------------------------------------------------------------------|------------------------------------------------|--------|
+| [Log Access Analytics API](http://ec2-54-164-225-234.compute-1.amazonaws.com:8080) | ec2-54-164-225-234.compute-1.amazonaws.com:8080 | Stopped|
+| [Jenkins Service](http://ec2-54-173-12-240.compute-1.amazonaws.com:8080)           | ec2-54-173-12-240.compute-1.amazonaws.com:8080  | Stopped|
+| [Kibana Service](http://ec2-54-173-72-3.compute-1.amazonaws.com:5601)              | ec2-54-173-72-3.compute-1.amazonaws.com:5601    | Stopped|
 
 ### Todos
  - Write MORE Tests and Integration Test;
