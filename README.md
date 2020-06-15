@@ -1,5 +1,3 @@
-[![](https://ilegra.com/en/wp-content/themes/ilegra-wp-theme/images/Logo.svg)](https://ilegra.com/en/)
-
 # Log Access Analytics
 Solution that receives logs via REST endpoints and calculate metrics. This solutions was built over [**AWS infrastructure**](https://console.aws.amazon.com/) using the Java Framework [**RestExpress**](https://github.com/RestExpress/RestExpress). The goal of this README is explain the strategies adobted and libraries used.
 
